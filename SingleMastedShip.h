@@ -5,5 +5,4 @@ class SingleMastedShip :
 {
 private:
     bool isHit; // false - nieuszkodzony; true - uszkodzony
-    bool isSunk;
 };

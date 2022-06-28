@@ -5,6 +5,5 @@ class TwoMastedShip :
 {
 private:
     bool isHit[2]; // false - nieuszkodzony; true - uszkodzony
-    bool isSunk;
 };
 
