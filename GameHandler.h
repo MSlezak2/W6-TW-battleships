@@ -5,7 +5,6 @@ class GameHandler
 {
 public:
 
-
 private:
 	bool isGameOver();
 	Player player_1;
