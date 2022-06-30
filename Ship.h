@@ -2,8 +2,10 @@
 
 class Ship {
 public:
-	/*virtual*/ bool isWithinTheBoard(int x, int y, bool isVe) {};
+	/*virtual*/ bool isWithinTheBoard();
 	void hitShip(int segment); // only for testing purpose TODO: remove it
+
+	bool handleTheShoot(int shootX, int shootY);
 
 	bool getIsSunk();
 	int getSize();

@@ -11,7 +11,7 @@ SingleMastedShip::SingleMastedShip(int xArgument, int yArgument)
 	size = 1;
 }
 
-bool SingleMastedShip::isWithinTheBoard(int x, int y, bool isVe) {
-	if (x < 0 || y < 0 || x > 4 || y > 4) return false;
-	else return true;
-}
+//bool SingleMastedShip::isWithinTheBoard(int newX, int newY, bool isVe) {
+//	if (newX < 0 || newY < 0 || newX > 4 || newY > 4) return false;
+//	else return true;
+//}

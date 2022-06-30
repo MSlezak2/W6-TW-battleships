@@ -21,8 +21,7 @@ int GameHandler::inputFirstPlayerSettings() {
 	std::cout << player1.getName() << " podaje swoje statki\n" << std::endl; // pobieramy statki (metoda) od Michała
 	
 	player1.placeShips(ui);
-
-	ui.displayCurrentPlayerBoard(player1);
+	//ui.displayCurrentPlayerBoard(player1);
 
 	return 0;
 }
@@ -38,7 +37,7 @@ int GameHandler::inputSecondPlayerSettings() {
 	std::cout << player2.getName() << " podaje swoje statki\n\n" << std::endl; // pobieramy statki (metoda) od Michała
 
 	player2.placeShips(ui);
-	ui.displayCurrentPlayerBoard(player2);
+	//ui.displayCurrentPlayerBoard(player2);
 
 	return 0;
 }
@@ -48,15 +47,70 @@ void GameHandler::firstPlayerMove() {
 	system("Color 30");
 	diplayTurnToEnd();
 	std::cout << player1.getName() << " wykonuje swoj ruch." << std::endl;
-	player1.howManyHits++;
+
+	// wyswietl plansze
+	ui.displayCurrentPlayerBoard(player1);
+	std::cout << std::endl;
+	ui.displayRivalsBoard(player2);
+	std::cout << std::endl;
+
+	bool hit;
+	// zapytaj uzytkownika o wspolrzedne strzalu 
+	// walidacja (nie moga wykraczac poza plansze)
+	int x, y;
+	ui.askForCoordinates();
+	x = ui.getX();
+	y = ui.getY();
+
+	// zaznaczenie strzalu w shotsHistory[][]
+	player2.shotsHistory[y][x] = true;
+
+	// sprawdz czy trafienie ktoregos z floty
+	for (int i = 0; i < player2.getShips().size(); i++) {
+		hit = player2.getShips()[i].handleTheShoot(x,y);
+		if (hit) {
+			player1.howManyHits++;
+		}
+	}
 }
 
+
 void GameHandler::secondPlayerMove() {
+	//system("cls");
+	//system("Color 03");
+	//diplayTurnToEnd();
+	//std::cout << player2.getName() << " wykonuje swoj ruch." << std::endl;
+	//player2.howManyHits++;
+
 	system("cls");
 	system("Color 03");
 	diplayTurnToEnd();
 	std::cout << player2.getName() << " wykonuje swoj ruch." << std::endl;
-	player2.howManyHits++;
+
+	// wyswietl plansze
+	ui.displayCurrentPlayerBoard(player2);
+	std::cout << std::endl;
+	ui.displayRivalsBoard(player1);
+	std::cout << std::endl;
+
+	bool hit;
+	// zapytaj uzytkownika o wspolrzedne strzalu 
+	// walidacja (nie moga wykraczac poza plansze)
+	int x, y;
+	ui.askForCoordinates();
+	x = ui.getX();
+	y = ui.getY();
+
+	// zaznaczenie strzalu w shotsHistory[][]
+	player1.shotsHistory[y][x] = true;
+
+	// sprawdz czy trafienie ktoregos z floty
+	for (int i = 0; i < player1.getShips().size(); i++) {
+		hit = player1.getShips()[i].handleTheShoot(x, y);
+		if (hit) {
+			player2.howManyHits++;
+		}
+	}
 }
 
 void GameHandler::getTurnsLimits() {
@@ -100,14 +154,14 @@ void GameHandler::gameLoop() {
 		changePlayerScreen(player1.getName());
 		firstPlayerMove();
 		std::cout << "inkrementacja ruchow: " << player1.howManyHits << std::endl;
-		Sleep(1000);
+		//Sleep(1000);
 
 		//isWin
 
 		changePlayerScreen(player2.getName());
 		secondPlayerMove();
 		std::cout << "inkrementacja 2 ruchow: " << player1.howManyHits << std::endl;
-		Sleep(1000);
+		//Sleep(1000);
 		// isWin
 		turnCounter++;
 	}

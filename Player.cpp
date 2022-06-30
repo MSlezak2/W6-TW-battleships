@@ -3,6 +3,7 @@
 #include <string>
 
 #include "UserInterface.h"
+#include "SingleMastedShip.h"
 
 Player::Player() {
 	clearShotsHistory();
@@ -30,31 +31,53 @@ std::vector<Ship> Player::getShips() {
 }
 
 void Player::placeShips(UserInterface ui) {
-
 	// TODO: Make constants that will hold how many units of different ships should there be
 
 	// prompt user to enter coordinates of twomasted ship and validate ( 1. are they in correct format / 2. aren't they out of range / 3. isn't the end of the boat outside of the border?)
 	bool collisionOccured = true;
-	TwoMastedShip tempShip;
+	bool isOutsideOfTheBoard = true;
+	Ship tempShip;
+	int x, y;
+	int temp_is_vertical;
 	do {
 		// read coordinates
 		ui.askForCoordinates();
-		int x = ui.getX();
-		int y = ui.getY();
+		x = ui.getX();
+		y = ui.getY();
 
-		//int temp_x = 0;
-		//int temp_y = 2;
-		int temp_is_vertical = true;
-		tempShip = TwoMastedShip(/*temp_x, temp_y*/x, y, temp_is_vertical);
+		temp_is_vertical = true;
+		tempShip = TwoMastedShip(x, y, temp_is_vertical);
 
 		// validate (4. is there a collision?):
+		isOutsideOfTheBoard = tempShip.isWithinTheBoard();
 		collisionOccured = isThereACollision(tempShip);
-	} while (collisionOccured);
-
+	} while (collisionOccured || isOutsideOfTheBoard);
 	// create ship and put it into "ships" vector
 	ships.push_back(tempShip);
+	ui.displayCurrentPlayerBoard(*this);
 
-	// do the same thing for onemasted ship but twice
+	for (int i = 0; i < 2; i++) {
+		// do the same thing for onemasted ship but twice
+		collisionOccured = true;
+		do {
+			// read coordinates
+			ui.askForCoordinates();
+			x = ui.getX();
+			y = ui.getY();
+
+			//int temp_x = 0;
+			//int temp_y = 2;
+			temp_is_vertical = true;
+			tempShip = SingleMastedShip(/*temp_x, temp_y*/x, y);
+
+			// validate (4. is there a collision?):
+			collisionOccured = isThereACollision(tempShip);
+		} while (collisionOccured);
+		// create ship and put it into "ships" vector
+		ships.push_back(tempShip);
+		ui.displayCurrentPlayerBoard(*this);
+	}
+	
 }
 
 void Player::clearShotsHistory() {

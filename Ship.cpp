@@ -1,9 +1,48 @@
 #pragma once
 #include "Ship.h"
 
+bool Ship::isWithinTheBoard() {
+    switch (size)
+    {
+    case 1:
+        if (x < 0 || y < 0 || x > 4 || y > 4) return false;
+        else return true;
+    case 2:
+        if (isVertical == true) {
+            if (x < 0 || y < 0 || x > 4 || y > 4 || y + 1 > 4) return false; //y pion
+        }
+        else if (isVertical != true) {
+            if (x < 0 || y < 0 || x > 4 || y > 4 || x + 1 > 4) return false;
+        }
+        else return true;
+        break;
+    }
+}
+
 void Ship::hitShip(int segment) {
     isHit[segment] = true;
     checkIfSunk();
+}
+
+bool Ship::handleTheShoot(int shootX, int shootY) {
+    bool hit = false;
+    int tempX = x;
+    int tempY = y;
+
+    for (int i = 0; i < size; i++) {
+        if (x == shootX && y == shootY) {
+            isHit[i] = true;
+            hit = true;
+        }
+        if (isVertical) {
+            tempY++;
+        } else {
+            tempX++;
+        }
+    }
+
+    checkIfSunk();
+    return hit;
 }
 
 bool Ship::getIsSunk() {
