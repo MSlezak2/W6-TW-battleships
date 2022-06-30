@@ -2,7 +2,6 @@
 
 class Ship {
 public:
-	bool isTooCloseToAnotherShip(int x, int y);
 	/*virtual*/ bool isWithinTheBoard(int x, int y, bool isVe) {};
 	void hitShip(int segment); // only for testing purpose TODO: remove it
 
@@ -13,7 +12,7 @@ public:
 	bool getIsVertical();
 	bool* getIsHit();
 	bool isColliding(Ship anotherShip);
-	
+
 
 protected:
 	int x, y;

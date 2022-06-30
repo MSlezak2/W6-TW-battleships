@@ -1,13 +1,24 @@
-#pragma once
 #include "Player.h"
-#include "UserInterface.h"
 #include <iostream>
+#include <string>
 
+#include "UserInterface.h"
 
+Player::Player() {
+	clearShotsHistory();
+}
 
 Player::Player(std::string nameArgument) {
-	name = nameArgument;
+	playerName = nameArgument;
 	clearShotsHistory();
+}
+
+std::string Player::getName() {
+	return playerName;
+}
+
+void Player::setName(){
+	std::cin >> playerName;
 }
 
 void Player::setShips(std::vector<Ship> shipsArgument) {
@@ -23,14 +34,13 @@ void Player::placeShips(UserInterface ui) {
 	// TODO: Make constants that will hold how many units of different ships should there be
 
 	// prompt user to enter coordinates of twomasted ship and validate ( 1. are they in correct format / 2. aren't they out of range / 3. isn't the end of the boat outside of the border?)
-	bool collisionOccured;
+	bool collisionOccured = true;
 	TwoMastedShip tempShip;
 	do {
+		// read coordinates
 		ui.askForCoordinates();
 		int x = ui.getX();
 		int y = ui.getY();
-
-		// read coordinates
 
 		//int temp_x = 0;
 		//int temp_y = 2;
@@ -39,9 +49,8 @@ void Player::placeShips(UserInterface ui) {
 
 		// validate (4. is there a collision?):
 		collisionOccured = isThereACollision(tempShip);
-		std::cout << collisionOccured;
 	} while (collisionOccured);
-	
+
 	// create ship and put it into "ships" vector
 	ships.push_back(tempShip);
 

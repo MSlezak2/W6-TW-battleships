@@ -32,7 +32,7 @@ bool* Ship::getIsHit() {
 }
 
 bool Ship::isColliding(Ship anotherShip) {
-   
+
     bool isColliding = false;
     int x0, xk, y0, yk;
     // wyznacz obszar "okupowany" przez ten drugi statek (wspolrzedne wiercholkow prostokata)
@@ -41,7 +41,8 @@ bool Ship::isColliding(Ship anotherShip) {
         xk = anotherShip.getX() == 5 ? 5 : anotherShip.getX() + 1;
         y0 = anotherShip.getY();
         yk = anotherShip.getY() + anotherShip.getSize() - 1;
-    } else {
+    }
+    else {
         x0 = anotherShip.getX();
         xk = anotherShip.getX() + anotherShip.getSize() - 1;
         y0 = anotherShip.getY() == 0 ? 0 : anotherShip.getY() - 1;
@@ -53,7 +54,7 @@ bool Ship::isColliding(Ship anotherShip) {
     int y1 = y;
     int x2 = isVertical ? x : x + size - 1;
     int y2 = isVertical ? y + size - 1 : y;
-    
+
     // sprawdz czy jest kolizja (patrz schemat - przypadek 2)
     if ((x1 >= 0 && x1 <= x0) && (x2 >= xk) && (y1 >= y0 && y1 <= yk)) {
         isColliding = true;
@@ -65,7 +66,7 @@ bool Ship::isColliding(Ship anotherShip) {
     }
 
     // sprawdz czy jest kolizja (patrz schemat - pozostale przypadki)
-    if ( ((x1 >= x0 && x1 <= xk) || (x2 >= x0 && x2 <= xk)) && ((y1 >= y0 && y1 <= yk) || (y2 >= y0 && y2 <= yk))) {
+    if (((x1 >= x0 && x1 <= xk) || (x2 >= x0 && x2 <= xk)) && ((y1 >= y0 && y1 <= yk) || (y2 >= y0 && y2 <= yk))) {
         isColliding = true;
     }
 
