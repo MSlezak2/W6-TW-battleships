@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Player.h"
 #include "SingleMastedShip.h"
@@ -6,12 +7,12 @@
 
 int main() {
 	Player player_1 = Player("player_1");
-
+	
 	// mockowanie vectora ze statkami:
-	SingleMastedShip ship_1 = SingleMastedShip(1,1,false);
-	SingleMastedShip ship_2 = SingleMastedShip(2, 2, false);
+	SingleMastedShip ship_1 = SingleMastedShip(3,2);
+	SingleMastedShip ship_2 = SingleMastedShip(4, 4);
 	ship_2.hitShip(0);
-	TwoMastedShip ship_3 = TwoMastedShip(0, 0, true);
+	TwoMastedShip ship_3 = TwoMastedShip(1, 1, true);
 	ship_3.hitShip(0);
 	std::vector<Ship> tempShips;
 	tempShips.push_back(ship_1);
@@ -19,7 +20,7 @@ int main() {
 	tempShips.push_back(ship_3);
 	player_1.setShips(tempShips);
 
-	player_1.shotsHistory[4][4] = true;
+	player_1.shotsHistory[0][4] = true;
 	// wyswietlanie planszy obecnego gracza
 
 	UserInterface ui;
@@ -28,12 +29,11 @@ int main() {
 	// wyswietlanie planszy przeciwnika
 	std::cout << std::endl;
 	ui.displayRivalsBoard(player_1);
-	//for (int i = 0; i < player_1.getShips().size(); i++)
-	//{
-	//	std::cout << player_1.getShips()[i].getIsSunk();
-	//}
 
-	//std::string input;
+	player_1.placeShips(ui);
+
+	ui.displayCurrentPlayerBoard(player_1);
+
 	getchar();
 	std::cout << "test";
 

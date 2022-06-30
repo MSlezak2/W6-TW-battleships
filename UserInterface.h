@@ -8,8 +8,14 @@ public:
 	void displayResults(); // ekran na koniec gry (kto wygral itd)
 	void displayCurrentPlayerBoard(Player player);  // wyswietl moja plansze (moje statki i ich stan)
 	void displayRivalsBoard(Player rivalPlayer); // wyswietl plansze przeciwnika (gdzie juz strzelalem, co trafilem, co zaptopilem itd.)
-	void askForCoordinates(int& x, int& y); // od razu waliduje czy podany input jest wspolrzedna, i czy nie wykracza poza ramy
+	void askForCoordinates(); // od razu waliduje czy podany input jest wspolrzedna, i czy nie wykracza poza ramy
+	
+	int getX();
+	int getY();
+	int getIsVertical();
 
 private:
+	int x, y;
+	bool isVertical;
 };
 

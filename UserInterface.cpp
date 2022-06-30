@@ -1,3 +1,4 @@
+#pragma once
 #include "UserInterface.h"
 #include "Player.h"
 #include <iostream>
@@ -30,7 +31,7 @@ void UserInterface::displayCurrentPlayerBoard(Player player) {
 
 	// wyswietlenie planszy (na podstawie pomocniczej tablicy "tempBoard"
 	std::cout << "  ";
-	for (int i = 0; i < 5; i++)
+	for (int i = 1; i <= 5; i++)
 	{
 		std::cout << i;
 	}
@@ -94,7 +95,7 @@ void UserInterface::displayRivalsBoard(Player rivalPlayer) {
 
 	// wyswietlenie planszy (na podstawie pomocniczej tablicy "tempBoard"
 	std::cout << "  ";
-	for (int i = 0; i < 5; i++)
+	for (int i = 1; i <= 5; i++)
 	{
 		std::cout << i;
 	}
@@ -108,8 +109,55 @@ void UserInterface::displayRivalsBoard(Player rivalPlayer) {
 	}
 }
 
-void UserInterface::askForCoordinates(int& x, int& y) {
+void UserInterface::askForCoordinates() { // od razu waliduje czy podany input jest wspolrzedna, i czy nie wykracza poza ramy
 
+	char columns;
+	bool co = false;
+	bool ro = false;
 
+	while (co == false)
+	{
+		std::cout << "select row " << std::endl;
+		std::cin >> columns;
+		if (columns != 'a' && columns != 'b' && columns != 'c' && columns != 'd' && columns != 'e' && columns != 'A' && columns != 'B' && columns != 'C' && columns != 'D' && columns != 'E') {
+			std::cout << "there is no such row" << std::endl;
+			//system("cls");
+		}
+		else co = true;
+		//system("cls");
+	}
+	while (ro == false)
+	{
+		std::cout << "select column " << std::endl;
+		std::cin >> x;
+		if (x != 1 && x != 2 && x != 3 && x != 4 && x != 5) {
+			std::cout << "there is no such column" << std::endl;
+			//system("cls");
+		} else {
+			ro = true;
+			x -= 1;
+		}
+		//system("cls");
+	}
+	if (columns == 'a' || columns == 'A')y = 0;
+	else if (columns == 'b' || columns == 'B')y = 1;
+	else if (columns == 'c' || columns == 'C')y = 2;
+	else if (columns == 'd' || columns == 'D')y = 3;
+	else if (columns == 'e' || columns == 'E')y = 4;
 
+}
+
+int UserInterface::getX()
+{
+	return x;
+}
+
+int UserInterface::getY()
+{
+	return y;
+}
+
+int UserInterface::getIsVertical()
+{
+	return isVertical;
 }
