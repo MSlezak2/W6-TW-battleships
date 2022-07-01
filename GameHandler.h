@@ -24,7 +24,6 @@ private:
 	int menuChoice{};
 	int turnLimit{};
 	int turnCounter{0};
-	UserInterface ui;
 };
 
 /* w playerze dajemy atrybut howManyHits

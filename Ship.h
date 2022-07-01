@@ -3,7 +3,6 @@
 class Ship {
 public:
 	/*virtual*/ bool isWithinTheBoard();
-	void hitShip(int segment); // only for testing purpose TODO: remove it
 
 	bool handleTheShoot(int shootX, int shootY);
 
@@ -16,7 +15,6 @@ public:
 	bool isColliding(Ship anotherShip);
 
 	void doesIntesectsWithTheArea(int x1, int x0, int x2, int xk, int y1, int y0, int yk, bool& isColliding, int y2);
-
 
 protected:
 	int x, y;

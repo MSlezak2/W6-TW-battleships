@@ -31,7 +31,6 @@ std::vector<Ship> Player::getShips() {
 }
 
 void Player::placeShips(UserInterface ui) {
-	// TODO: Make constants that will hold how many units of different ships should there be
 
 	// prompt user to enter coordinates of twomasted ship and validate ( 1. are they in correct format / 2. aren't they out of range / 3. isn't the end of the boat outside of the border?)
 	bool collisionOccured = true;
@@ -68,8 +67,6 @@ void Player::placeShips(UserInterface ui) {
 			x = ui.getX();
 			y = ui.getY();
 
-			//int temp_x = 0;
-			//int temp_y = 2;
 			temp_is_vertical = true;
 			tempShip = SingleMastedShip(/*temp_x, temp_y*/x, y);
 

@@ -17,12 +17,10 @@ int GameHandler::inputFirstPlayerSettings() {
 	player1.setName();
 	system("cls");
 
-	ui.displayCurrentPlayerBoard(player1);
-
+	inter.displayCurrentPlayerBoard(player1);
 	std::cout << player1.getName() << " podaje swoje statki\n" << std::endl; // pobieramy statki (metoda) od Michała
 	
-	player1.placeShips(ui);
-	//ui.displayCurrentPlayerBoard(player1);
+	player1.placeShips(inter);
 
 	return 0;
 }
@@ -33,12 +31,10 @@ int GameHandler::inputSecondPlayerSettings() {
 	std::cout << "Please enter nick for Second Player: ";
 	player2.setName();
 
-	ui.displayCurrentPlayerBoard(player2);
-
+	inter.displayCurrentPlayerBoard(player2);
 	std::cout << player2.getName() << " podaje swoje statki\n" << std::endl; // pobieramy statki (metoda) od Michała
 
-	player2.placeShips(ui);
-	//ui.displayCurrentPlayerBoard(player2);
+	player2.placeShips(inter);
 
 	return 0;
 }
@@ -51,19 +47,19 @@ void GameHandler::firstPlayerMove() {
 
 	// wyswietl plansze
 	std::cout << std::endl << "Your board:" << std::endl;
-	ui.displayCurrentPlayerBoard(player1);
+	inter.displayCurrentPlayerBoard(player1);
 	std::cout << std::endl;
 	std::cout << std::endl << "Enemy's board:" << std::endl;
-	ui.displayRivalsBoard(player2);
+	inter.displayRivalsBoard(player2);
 	std::cout << std::endl;
 
 	bool hit;
 	// zapytaj uzytkownika o wspolrzedne strzalu 
 	// walidacja (nie moga wykraczac poza plansze)
 	int x, y;
-	ui.askForCoordinates();
-	x = ui.getX();
-	y = ui.getY();
+	inter.askForCoordinates();
+	x = inter.getX();
+	y = inter.getY();
 
 	// zaznaczenie strzalu w shotsHistory[][]
 	player2.shotsHistory[y][x] = true;
@@ -74,11 +70,6 @@ void GameHandler::firstPlayerMove() {
 
 
 void GameHandler::secondPlayerMove() {
-	//system("cls");
-	//system("Color 03");
-	//diplayTurnToEnd();
-	//std::cout << player2.getName() << " wykonuje swoj ruch." << std::endl;
-	//player2.howManyHits++;
 
 	system("cls");
 	system("Color 03");
@@ -87,19 +78,19 @@ void GameHandler::secondPlayerMove() {
 
 	// wyswietl plansze
 	std::cout << std::endl << "Your board:" << std::endl;
-	ui.displayCurrentPlayerBoard(player2);
+	inter.displayCurrentPlayerBoard(player2);
 	std::cout << std::endl;
 	std::cout << std::endl << "Enemy's board:" << std::endl;
-	ui.displayRivalsBoard(player1);
+	inter.displayRivalsBoard(player1);
 	std::cout << std::endl;
 
 	bool hit;
 	// zapytaj uzytkownika o wspolrzedne strzalu 
 	// walidacja (nie moga wykraczac poza plansze)
 	int x, y;
-	ui.askForCoordinates();
-	x = ui.getX();
-	y = ui.getY();
+	inter.askForCoordinates();
+	x = inter.getX();
+	y = inter.getY();
 
 	// zaznaczenie strzalu w shotsHistory[][]
 	player1.shotsHistory[y][x] = true;
@@ -148,15 +139,10 @@ void GameHandler::gameLoop() {
 		changePlayerScreen(player1.getName());
 		firstPlayerMove();
 		std::cout << "inkrementacja ruchow: " << player1.howManyHits << std::endl;
-		//Sleep(1000);
-
-		//isWin
 
 		changePlayerScreen(player2.getName());
 		secondPlayerMove();
 		std::cout << "inkrementacja 2 ruchow: " << player1.howManyHits << std::endl;
-		//Sleep(1000);
-		// isWin
 		turnCounter++;
 	}
 	

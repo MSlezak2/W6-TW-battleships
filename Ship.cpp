@@ -20,11 +20,6 @@ bool Ship::isWithinTheBoard() {
     }
 }
 
-void Ship::hitShip(int segment) {
-    isHit[segment] = true;
-    checkIfSunk();
-}
-
 bool Ship::handleTheShoot(int shootX, int shootY) {
     bool hit = false;
     int tempX = x;
