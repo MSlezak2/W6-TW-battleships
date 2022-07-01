@@ -13,8 +13,9 @@ void GameHandler::changePlayerScreen(std::string namePlayer) {
 
 int GameHandler::inputFirstPlayerSettings() {
 
-	std::cout << "Please enter nick for First Player: "; 
+	std::cout << "\tPlease enter nick for First Player: "; 
 	player1.setName();
+	system("cls");
 
 	ui.displayCurrentPlayerBoard(player1);
 
@@ -34,7 +35,7 @@ int GameHandler::inputSecondPlayerSettings() {
 
 	ui.displayCurrentPlayerBoard(player2);
 
-	std::cout << player2.getName() << " podaje swoje statki\n\n" << std::endl; // pobieramy statki (metoda) od Michała
+	std::cout << player2.getName() << " podaje swoje statki\n" << std::endl; // pobieramy statki (metoda) od Michała
 
 	player2.placeShips(ui);
 	//ui.displayCurrentPlayerBoard(player2);
@@ -49,8 +50,10 @@ void GameHandler::firstPlayerMove() {
 	std::cout << player1.getName() << " wykonuje swoj ruch." << std::endl;
 
 	// wyswietl plansze
+	std::cout << std::endl << "Your board:" << std::endl;
 	ui.displayCurrentPlayerBoard(player1);
 	std::cout << std::endl;
+	std::cout << std::endl << "Enemy's board:" << std::endl;
 	ui.displayRivalsBoard(player2);
 	std::cout << std::endl;
 
@@ -66,12 +69,7 @@ void GameHandler::firstPlayerMove() {
 	player2.shotsHistory[y][x] = true;
 
 	// sprawdz czy trafienie ktoregos z floty
-	for (int i = 0; i < player2.getShips().size(); i++) {
-		hit = player2.getShips()[i].handleTheShoot(x,y);
-		if (hit) {
-			player1.howManyHits++;
-		}
-	}
+	player2.handleTheShoot(x,y);
 }
 
 
@@ -88,8 +86,10 @@ void GameHandler::secondPlayerMove() {
 	std::cout << player2.getName() << " wykonuje swoj ruch." << std::endl;
 
 	// wyswietl plansze
+	std::cout << std::endl << "Your board:" << std::endl;
 	ui.displayCurrentPlayerBoard(player2);
 	std::cout << std::endl;
+	std::cout << std::endl << "Enemy's board:" << std::endl;
 	ui.displayRivalsBoard(player1);
 	std::cout << std::endl;
 
@@ -105,27 +105,21 @@ void GameHandler::secondPlayerMove() {
 	player1.shotsHistory[y][x] = true;
 
 	// sprawdz czy trafienie ktoregos z floty
-	for (int i = 0; i < player1.getShips().size(); i++) {
-		hit = player1.getShips()[i].handleTheShoot(x, y);
-		if (hit) {
-			player2.howManyHits++;
-		}
-	}
+	player1.handleTheShoot(x, y);
 }
 
 void GameHandler::getTurnsLimits() {
 
 	while (true) {
-
+		system("cls");
 		std::cout << "\tEnter number of wanted turns (3-25) >> ", std::cin >> turnLimit;
 
 		if ((turnLimit >= 3) && (turnLimit <=25))
 			break;
 		else
-			std::cout << "Invalid input. Try again!\n" << std::endl;
+			std::cout << "\tInvalid input. Try again!\n" << std::endl;
 
 		system("pause");
-		system("cls");
 	}
 }
 
@@ -149,7 +143,7 @@ void GameHandler::gameLoop() {
 	changePlayerScreen("second player's");
 	inputSecondPlayerSettings();
 
-	while (player1.howManyHits < 5 && player2.howManyHits < 5 && turnCounter <= turnLimit) {
+	while (player1.howManyHits < 4 && player2.howManyHits < 4 && turnCounter <= turnLimit) {
 		// metody z userInterface od Michała o sprawdzaniu strzałów
 		changePlayerScreen(player1.getName());
 		firstPlayerMove();
@@ -169,6 +163,13 @@ void GameHandler::gameLoop() {
 	inter.displayEndGameSign();
 	if ((turnCounter - 1) == turnLimit)
 		std::cout << "\n\tNo more turns, it's a draw!" << std::endl;
-	else
-		displayWhoWin(player1.getName());
+	else {
+		if (player1.howManyHits > player2.howManyHits) {
+			displayWhoWin(player2.getName());
+		} else {
+			displayWhoWin(player1.getName());
+		}
+	}
+
+	system("pause");
 }

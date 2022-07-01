@@ -7,12 +7,13 @@ bool Ship::isWithinTheBoard() {
     case 1:
         if (x < 0 || y < 0 || x > 4 || y > 4) return false;
         else return true;
+        break;
     case 2:
         if (isVertical == true) {
-            if (x < 0 || y < 0 || x > 4 || y > 4 || y + 1 > 4) return false; //y pion
+            if (x < 0 || y < 0 || x > 4 || y + 1 > 4) return false; //y pion
         }
         else if (isVertical != true) {
-            if (x < 0 || y < 0 || x > 4 || y > 4 || x + 1 > 4) return false;
+            if (x < 0 || y < 0 || y > 4 || x + 1 > 4) return false;
         }
         else return true;
         break;
@@ -30,7 +31,7 @@ bool Ship::handleTheShoot(int shootX, int shootY) {
     int tempY = y;
 
     for (int i = 0; i < size; i++) {
-        if (x == shootX && y == shootY) {
+        if (tempX == shootX && tempY == shootY) {
             isHit[i] = true;
             hit = true;
         }
@@ -94,6 +95,15 @@ bool Ship::isColliding(Ship anotherShip) {
     int x2 = isVertical ? x : x + size - 1;
     int y2 = isVertical ? y + size - 1 : y;
 
+    doesIntesectsWithTheArea(x1, x0, x2, xk, y1, y0, yk, isColliding, y2);
+
+    // sprawdz czy nie ma kolizji "za wierzcholkami" statku
+    
+    return isColliding;
+}
+
+void Ship::doesIntesectsWithTheArea(int x1, int x0, int x2, int xk, int y1, int y0, int yk, bool& isColliding, int y2)
+{
     // sprawdz czy jest kolizja (patrz schemat - przypadek 2)
     if ((x1 >= 0 && x1 <= x0) && (x2 >= xk) && (y1 >= y0 && y1 <= yk)) {
         isColliding = true;
@@ -108,14 +118,6 @@ bool Ship::isColliding(Ship anotherShip) {
     if (((x1 >= x0 && x1 <= xk) || (x2 >= x0 && x2 <= xk)) && ((y1 >= y0 && y1 <= yk) || (y2 >= y0 && y2 <= yk))) {
         isColliding = true;
     }
-
-    // sprawdz czy nie ma kolizji "za wierzcholkami" statku
-    if (anotherShip.getIsVertical()) {
-
-    }
-
-
-    return isColliding;
 }
 
 void Ship::checkIfSunk() {

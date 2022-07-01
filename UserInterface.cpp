@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <algorithm>
 #include "UserInterface.h"
 #include "GameHandler.h"
 #include "Player.h"
@@ -269,6 +270,35 @@ void UserInterface::askForCoordinates() { // od razu waliduje czy podany input j
 	else if (columns == 'd' || columns == 'D')y = 3;
 	else if (columns == 'e' || columns == 'E')y = 4;
 
+}
+
+bool UserInterface::askIfVertical() {
+	bool isVertical;
+	std::string userInput;
+	char letter = ' ';
+
+	std::cout << "(V)ertical or (H)orizontal?" << std::endl;
+	std::cin >> userInput;
+	std::transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
+	letter = userInput.at(0);
+	while (letter != 'V' && letter != 'H') {
+		std::cout << "Did I stutter?! (V)ertical or (H)orizontal?" << std::endl;
+		std::cin >> userInput;
+		std::transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
+		letter = userInput.at(0);
+	}
+
+	switch (letter)
+	{
+	case 'V':
+		isVertical = true;
+		break;
+	case 'H':
+		isVertical = false;
+		break;
+	}
+
+	return isVertical;
 }
 
 int UserInterface::getX()

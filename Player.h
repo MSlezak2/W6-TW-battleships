@@ -22,6 +22,7 @@ public:
 	bool shotsHistory[5][5]; // tablica przechowuje dla kazdego elementu na planszy informacje czy przeciwnik juz tam strzelal (true) czy jeszcze nie (false)
 	//TODO: make shotsHitsory private again
 	void placeShips(UserInterface ui);
+	void handleTheShoot(int x, int y);
 /**/
 
 private:
@@ -31,5 +32,6 @@ private:
 
 	void clearShotsHistory();
 	bool isThereACollision(Ship tempShip);
+	
 
 };

@@ -40,20 +40,22 @@ void Player::placeShips(UserInterface ui) {
 	int x, y;
 	int temp_is_vertical;
 	do {
+		std::cout << "Place your two-masted ship:" << std::endl;
 		// read coordinates
 		ui.askForCoordinates();
 		x = ui.getX();
 		y = ui.getY();
 
-		temp_is_vertical = true;
+		temp_is_vertical = ui.askIfVertical();
 		tempShip = TwoMastedShip(x, y, temp_is_vertical);
 
 		// validate (4. is there a collision?):
-		isOutsideOfTheBoard = tempShip.isWithinTheBoard();
+		isOutsideOfTheBoard = !tempShip.isWithinTheBoard();
 		collisionOccured = isThereACollision(tempShip);
 	} while (collisionOccured || isOutsideOfTheBoard);
 	// create ship and put it into "ships" vector
 	ships.push_back(tempShip);
+	system("cls");
 	ui.displayCurrentPlayerBoard(*this);
 
 	for (int i = 0; i < 2; i++) {
@@ -61,6 +63,7 @@ void Player::placeShips(UserInterface ui) {
 		collisionOccured = true;
 		do {
 			// read coordinates
+			std::cout << "Place your single-masted ship:" << std::endl;
 			ui.askForCoordinates();
 			x = ui.getX();
 			y = ui.getY();
@@ -75,9 +78,19 @@ void Player::placeShips(UserInterface ui) {
 		} while (collisionOccured);
 		// create ship and put it into "ships" vector
 		ships.push_back(tempShip);
+		system("cls");
 		ui.displayCurrentPlayerBoard(*this);
 	}
-	
+	system("pause");
+}
+
+void Player::handleTheShoot(int x, int y) {
+	for (int i = 0; i < ships.size(); i++) {
+		bool hit = ships[i].handleTheShoot(x, y);
+		if (hit) {
+			howManyHits++;
+		}
+	}
 }
 
 void Player::clearShotsHistory() {
